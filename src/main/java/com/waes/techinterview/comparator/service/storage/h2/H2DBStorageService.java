@@ -68,12 +68,12 @@ public class H2DBStorageService implements StorageService{
     public DocumentVO getDocument(Long id) throws ProcessingException{
         DocumentVO documentVO = null;
         try{
-            Optional<DocumentEntity> documentEntity = h2DatabaseDao.findById(id);
-            if(documentEntity.isPresent()){
+            DocumentEntity documentEntity = h2DatabaseDao.getOne(id);
+            if(documentEntity!=null){
                 documentVO = new DocumentVO();
-                documentVO.setId(documentEntity.get().getId());
-                documentVO.setLeft(documentEntity.get().getLeft());
-                documentVO.setRight(documentEntity.get().getRight());
+                documentVO.setId(documentEntity.getId());
+                documentVO.setLeft(documentEntity.getLeft());
+                documentVO.setRight(documentEntity.getRight());
             }
             return documentVO;
         }catch(Exception e){
