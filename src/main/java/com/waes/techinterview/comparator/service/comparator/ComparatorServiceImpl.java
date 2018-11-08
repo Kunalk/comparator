@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-/**
+/** Implementation class of ComparatorService
  * Created by Kunal on 08-11-2018.
  */
 @Service
@@ -48,11 +48,14 @@ public class ComparatorServiceImpl implements ComparatorService {
             byte[] bytesLeft = documentVO.getLeft().getBytes();
             byte[] bytesRight = documentVO.getRight().getBytes();
 
+            // check if length of data does not match
             if(bytesLeft.length != bytesRight.length){
                 comparatorResultVO = new ComparatorResultVO(ComparatorResultEnum.LENGTH_MISMATCH);
             }else if(Arrays.equals(bytesLeft, bytesRight)){
+                // check content of the byte[] are exact match
                 comparatorResultVO = new ComparatorResultVO(ComparatorResultEnum.EQUAL);
             }else{
+                // check for content difference
                 comparatorResultVO = new ComparatorResultVO(ComparatorResultEnum.OFFSET_MISMATCH);
                 comparatorResultVO.setContentDifferences(calculateOffsetDifference(documentVO));
             }
@@ -65,7 +68,7 @@ public class ComparatorServiceImpl implements ComparatorService {
     }
 
     /**
-     *
+     * Method to calculate the offset + length difference between the two sides
      * @param documentVO
      * @return
      */

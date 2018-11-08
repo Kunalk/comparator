@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
-/**
+/** DB entity class specific to Database (H2)
  * Created by Kunal on 08-11-2018.
  */
 @Entity

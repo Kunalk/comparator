@@ -17,7 +17,7 @@ public interface StorageService {
     void store(ComparatorInputVO comparatorInputVO) throws ProcessingException;
 
     /**
-     *
+     * Retrive the document
      * @param id
      * @return
      */

@@ -97,7 +97,12 @@ public class RestController {
     /**
      * Result endpoint. It provides a JSON with the comparison's result.
      * @param id
-     * @return HTTP Response 200: OK <p>
+     * @return HTTP Response 200: OK if data present for both left and right sides<p>
+     *         if both the sides are equal -> "comparatorResult":"EQUAL"
+     *         if the length are different -> "comparatorResult":"LENGTH_MISMATCH"
+     *         if the sides are same length but content are diff -> "comparatorResult":"OFFSET_MISMATCH"
+     *     <p>
+     *         Otherwise return 404 not found.
      */
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     private ResponseEntity<ComparatorResultVO> diff(@PathVariable Long id) throws ValidationException, ProcessingException{
