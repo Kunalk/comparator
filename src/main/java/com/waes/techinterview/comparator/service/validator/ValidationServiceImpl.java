@@ -1,5 +1,6 @@
 package com.waes.techinterview.comparator.service.validator;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Pattern;
@@ -25,6 +26,11 @@ public class ValidationServiceImpl implements ValidationService{
      */
     @Override
     public boolean validateInputData(String data) {
+
+        if(StringUtils.isBlank(data)) {
+            return false;
+        }
+
         final String sanitized = data.replaceAll(WHITESPACE_REGEX, "");
 
         return BASE64_PATTERN.matcher(sanitized).matches();

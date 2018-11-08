@@ -33,13 +33,13 @@ public class ComparatorServiceImpl implements ComparatorService {
         // if document is not present -> throw exception with details
         if(documentVO ==null ){
             //throw exception - data not present for given id
-            throw new ValidationException(ErrorCodeEnum.DATA_NOT_PRESENT);
+            throw new ValidationException("Record does not exists" ,ErrorCodeEnum.DATA_NOT_PRESENT);
         }
 
         // if either of left or right side data is not present -> throw exception with details
         if(StringUtils.isBlank(documentVO.getLeft()) || StringUtils.isBlank(documentVO.getRight())){
             // throw exception - data not sufficient to perform comparison
-            throw new ValidationException(ErrorCodeEnum.DATA_NOT_PRESENT);
+            throw new ValidationException("Data not sufficient to perform comparison",ErrorCodeEnum.DATA_NOT_PRESENT);
         }
 
         ComparatorResultVO comparatorResultVO = null;
