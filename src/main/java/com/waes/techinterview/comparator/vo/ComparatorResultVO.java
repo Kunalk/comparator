@@ -1,26 +1,38 @@
 package com.waes.techinterview.comparator.vo;
 
+import java.util.List;
+
 /**
  * Created by Kunal on 07-11-2018.
  */
 public class ComparatorResultVO {
     private ComparatorResultEnum comparatorResultEnum;
-    private String resultMessage;
+
+    private List<ContentDifference> contentDifferences;
 
     public ComparatorResultVO(ComparatorResultEnum comparatorResultEnum, String resultMessage) {
         this.comparatorResultEnum = comparatorResultEnum;
-        this.resultMessage = resultMessage;
+
     }
 
     public ComparatorResultVO(ComparatorResultEnum comparatorResultEnum) {
         this.comparatorResultEnum = comparatorResultEnum;
     }
 
+
     public ComparatorResultEnum getComparatorResultEnum() {
         return comparatorResultEnum;
     }
 
-    public String getResultMessage() {
-        return resultMessage;
+
+    public List<ContentDifference> getContentDifferences() {
+        return contentDifferences;
     }
+
+    public void setContentDifferences(List<ContentDifference> contentDifferences) {
+        this.contentDifferences = contentDifferences;
+    }
+
+
+
 }

@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.waes.techinterview.comparator.service.comparator.ComparatorService;
 import com.waes.techinterview.comparator.service.storage.StorageService;
 import com.waes.techinterview.comparator.service.validator.ValidationService;
-import com.waes.techinterview.comparator.vo.ComparatorInputSideEnum;
-import com.waes.techinterview.comparator.vo.ComparatorInputVO;
-import com.waes.techinterview.comparator.vo.ComparatorResultVO;
-import com.waes.techinterview.comparator.vo.RequestObject;
+import com.waes.techinterview.comparator.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +32,7 @@ public class RestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestController.class);
 
-    @Autowired
+    //@Autowired
     private ValidationService validationService;
 
     @Autowired
@@ -56,11 +53,11 @@ public class RestController {
         LOG.debug("Setting left side argument for ID (), with value {}", id, data.getData());
 
         LOG.debug("Validating input parameter for ID {}",id);
-        if(!validationService.validateInputData(data.getData())){
-            LOG.error("Validation failed for entered input for ID (), with value {}", id, data.getData());
+        //if(!validationService.validateInputData(data.getData())){
+            //LOG.error("Validation failed for entered input for ID (), with value {}", id, data.getData());
             //TODO throw validation exception
 
-        }
+       // }
         LOG.debug("Validation completed for input parameter for ID {}",id);
 
         ComparatorInputVO comparatorInputVO = new ComparatorInputVO(id, data.getData(), ComparatorInputSideEnum.LEFT);
@@ -95,7 +92,8 @@ public class RestController {
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     private ResponseEntity<ComparatorResultVO> diff(@PathVariable Long id) {
 
-        ComparatorResultVO comparatorResultVO = comparatorService.compare(id);
+        DocumentVO documentVO = storageService.getDocument(id);
+        ComparatorResultVO comparatorResultVO = comparatorService.compare(documentVO);
 
         if(comparatorResultVO.getComparatorResultEnum()!=null){
             return new ResponseEntity<ComparatorResultVO>(comparatorResultVO,HttpStatus.OK);

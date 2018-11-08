@@ -1,21 +1,35 @@
-package com.waes.techinterview.comparator.vo;
+package com.waes.techinterview.comparator.service.storage.h2;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
- * Created by Kunal on 07-11-2018.
+ * Created by Kunal on 08-11-2018.
  */
-public class DocumentVO {
+@Entity
+public class DocumentEntity {
 
+    @Id
     private long id;
 
+
+    @Lob
+    @Column(length = 32000)
     private String left;
 
+
+    @Lob
+    @Column(length = 32000)
     private String right;
 
-    public DocumentVO(){
+
+    public DocumentEntity() {
 
     }
 
-    public DocumentVO(long id, String left, String right) {
+    public DocumentEntity(long id, String left, String right) {
         this.id = id;
         this.left = left;
         this.right = right;
@@ -45,6 +59,7 @@ public class DocumentVO {
         this.right = right;
     }
 
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -55,6 +70,7 @@ public class DocumentVO {
         return result;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -63,7 +79,7 @@ public class DocumentVO {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DocumentVO other = (DocumentVO) obj;
+        DocumentEntity other = (DocumentEntity) obj;
         if (id != other.id)
             return false;
         if (left == null) {
@@ -78,10 +94,4 @@ public class DocumentVO {
             return false;
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "DocumentVO [id=" + getId() + ", left=" + getLeft() + ", right=" + getRight() + "]";
-    }
-
 }
