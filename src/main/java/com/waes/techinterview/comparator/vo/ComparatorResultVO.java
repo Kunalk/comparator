@@ -6,22 +6,22 @@ import java.util.List;
  * Created by Kunal on 07-11-2018.
  */
 public class ComparatorResultVO {
-    private ComparatorResultEnum comparatorResultEnum;
+    private ComparatorResultEnum comparatorResult;
 
     private List<ContentDifference> contentDifferences;
 
     public ComparatorResultVO(ComparatorResultEnum comparatorResultEnum, String resultMessage) {
-        this.comparatorResultEnum = comparatorResultEnum;
+        this.comparatorResult = comparatorResultEnum;
 
     }
 
     public ComparatorResultVO(ComparatorResultEnum comparatorResultEnum) {
-        this.comparatorResultEnum = comparatorResultEnum;
+        this.comparatorResult = comparatorResultEnum;
     }
 
 
-    public ComparatorResultEnum getComparatorResultEnum() {
-        return comparatorResultEnum;
+    public ComparatorResultEnum getComparatorResult() {
+        return comparatorResult;
     }
 
 

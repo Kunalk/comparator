@@ -1,5 +1,6 @@
 package com.waes.techinterview.comparator.service.storage;
 
+import com.waes.techinterview.comparator.exception.ProcessingException;
 import com.waes.techinterview.comparator.vo.ComparatorInputVO;
 import com.waes.techinterview.comparator.vo.DocumentVO;
 
@@ -13,13 +14,13 @@ public interface StorageService {
      * @param comparatorInputVO input object containing all the fields.
      *
      */
-    void store(ComparatorInputVO comparatorInputVO);
+    void store(ComparatorInputVO comparatorInputVO) throws ProcessingException;
 
     /**
      *
      * @param id
      * @return
      */
-    DocumentVO getDocument(Long id);
+    DocumentVO getDocument(Long id) throws ProcessingException;
 
 }

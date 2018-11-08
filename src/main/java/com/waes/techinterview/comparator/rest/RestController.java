@@ -1,6 +1,9 @@
 package com.waes.techinterview.comparator.rest;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.waes.techinterview.comparator.exception.ErrorCodeEnum;
+import com.waes.techinterview.comparator.exception.ProcessingException;
+import com.waes.techinterview.comparator.exception.ValidationException;
 import com.waes.techinterview.comparator.service.comparator.ComparatorService;
 import com.waes.techinterview.comparator.service.storage.StorageService;
 import com.waes.techinterview.comparator.service.validator.ValidationService;
@@ -32,7 +35,7 @@ public class RestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RestController.class);
 
-    //@Autowired
+    @Autowired
     private ValidationService validationService;
 
     @Autowired
@@ -48,16 +51,16 @@ public class RestController {
      * @return HTTP Response 201: Created if successful
      */
     @RequestMapping(value = "/left", method = RequestMethod.POST, produces = "application/json")
-    private ResponseEntity<String> left(@PathVariable Long id, @RequestBody RequestObject data){
+    private ResponseEntity<String> left(@PathVariable Long id, @RequestBody RequestObject data) throws ValidationException, ProcessingException{
 
         LOG.debug("Setting left side argument for ID (), with value {}", id, data.getData());
 
         LOG.debug("Validating input parameter for ID {}",id);
-        //if(!validationService.validateInputData(data.getData())){
-            //LOG.error("Validation failed for entered input for ID (), with value {}", id, data.getData());
-            //TODO throw validation exception
+        if(!validationService.validateInputData(data.getData())){
+            LOG.error("Validation failed for entered input for ID (), with value {}", id, data.getData());
+            throw new ValidationException("Data is not base 64 encoded format",ErrorCodeEnum.DATA_INVALID);
 
-       // }
+        }
         LOG.debug("Validation completed for input parameter for ID {}",id);
 
         ComparatorInputVO comparatorInputVO = new ComparatorInputVO(id, data.getData(), ComparatorInputSideEnum.LEFT);
@@ -74,9 +77,16 @@ public class RestController {
      * @return HTTP Response 201: Created if successful
      */
     @RequestMapping(value = "/right", method = RequestMethod.POST, produces = "application/json")
-    private ResponseEntity<String> right(@PathVariable Long id, @RequestBody RequestObject data){
+    private ResponseEntity<String> right(@PathVariable Long id, @RequestBody RequestObject data)throws ValidationException, ProcessingException{
 
         LOG.debug("Setting left side argument for ID (ID), with value {VAL}", id, data.getData());
+
+        LOG.debug("Validating input parameter for ID {}",id);
+        if(!validationService.validateInputData(data.getData())){
+            LOG.error("Validation failed for entered input for ID (), with value {}", id, data.getData());
+            throw new ValidationException("Data is not base 64 encoded format",ErrorCodeEnum.DATA_INVALID);
+        }
+        LOG.debug("Validation completed for input parameter for ID {}",id);
 
         ComparatorInputVO comparatorInputVO = new ComparatorInputVO(id, data.getData(), ComparatorInputSideEnum.RIGHT);
         storageService.store(comparatorInputVO);
@@ -90,12 +100,12 @@ public class RestController {
      * @return HTTP Response 200: OK <p>
      */
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    private ResponseEntity<ComparatorResultVO> diff(@PathVariable Long id) {
+    private ResponseEntity<ComparatorResultVO> diff(@PathVariable Long id) throws ValidationException, ProcessingException{
 
         DocumentVO documentVO = storageService.getDocument(id);
         ComparatorResultVO comparatorResultVO = comparatorService.compare(documentVO);
 
-        if(comparatorResultVO.getComparatorResultEnum()!=null){
+        if(comparatorResultVO.getComparatorResult()!=null){
             return new ResponseEntity<ComparatorResultVO>(comparatorResultVO,HttpStatus.OK);
         }else{
             return new ResponseEntity<ComparatorResultVO>(comparatorResultVO,HttpStatus.NOT_FOUND);
