@@ -78,7 +78,7 @@ public class H2DBStorageService implements StorageService{
             return documentVO;
         }catch(Exception e){
             LOG.error("Exception identified while retrieving information for ID -" + id + " due to exception -"+e.getMessage(), e );
-            throw new ProcessingException(e.getMessage(), e, ErrorCodeEnum.RETRIEVE_ERROR);
+            throw new ProcessingException("Record not present for id - " + id , e, ErrorCodeEnum.DATA_NOT_PRESENT);
         }
     }
 }

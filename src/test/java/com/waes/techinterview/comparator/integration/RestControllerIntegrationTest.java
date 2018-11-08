@@ -114,7 +114,7 @@ public class RestControllerIntegrationTest {
 
     @Test
     public void testDocumentContentsWhenRecorNotPresent()throws Exception{
-        mvc.perform(MockMvcRequestBuilders.get("/v1/diff/13")).andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
+        mvc.perform(MockMvcRequestBuilders.get("/v1/diff/13")).andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
